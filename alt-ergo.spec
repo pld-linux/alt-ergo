@@ -18,10 +18,6 @@ BuildRequires:	ocaml-lablgtk2-gtksourceview2-devel
 Requires(post):	coreutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-# Filter out symbols that are provided by interface files (*.mli) only.
-# There are no corresponding symbols available at runtime.
-%global __requires_exclude ocaml\\\(((Sig)|(Smt_ast)|(Why_ptree))\\\)
-
 %description
 Alt-Ergo is an automated theorem prover implemented in OCaml. It is
 based on CC(X) - a congruence closure algorithm parameterized by an
