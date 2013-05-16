@@ -53,8 +53,8 @@ sed -i -e 's/let print_flag = true/let print_flag = false/;' pruning.ml
 	--libdir=%{_datadir} \
 	--mandir=%{_mandir}
 
-%{__make} OCAMLBEST=opt OCAMLOPT=ocamlopt.opt
-%{__make} OCAMLBEST=opt OCAMLOPT=ocamlopt.opt gui
+%{__make} -j1 OCAMLBEST=opt OCAMLOPT=ocamlopt.opt
+%{__make} -j1 OCAMLBEST=opt OCAMLOPT=ocamlopt.opt gui
 
 iconv -f ISO-8859-1 -t UTF-8 -o CeCILL-C.utf8 CeCILL-C
 touch -r CeCILL-C CeCILL-C.utf8
