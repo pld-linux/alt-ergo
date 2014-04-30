@@ -1,12 +1,12 @@
 Summary:	Automated theorem prover including linear arithmetic
 Name:		alt-ergo
-Version:	0.95.1
+Version:	0.95.2
 Release:	1
 License:	CeCILL-C
 Group:		Applications/Engineering
 URL:		http://alt-ergo.lri.fr/
-Source0:	http://alt-ergo.lri.fr/http/%{name}-%{version}/alt-ergo-%{version}.tar.gz
-# Source0-md5:	c0f1cbfdae04f1c37853ed5fd10154ec
+Source0:	http://alt-ergo.ocamlpro.com/http/%{name}-%{version}/alt-ergo-%{version}.tar.gz
+# Source0-md5:	ab9c160f7ecb26aa2479f9169db9b869
 Source1:	%{name}.desktop
 BuildRequires:	desktop-file-utils
 BuildRequires:	gtksourceview2-devel
@@ -15,6 +15,7 @@ BuildRequires:	ocaml
 BuildRequires:	ocaml-graph-devel
 BuildRequires:	ocaml-lablgtk2-devel
 BuildRequires:	ocaml-lablgtk2-gtksourceview2-devel
+BuildRequires:	ocaml-zarith-devel
 Requires(post):	coreutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -40,7 +41,7 @@ A graphical front end for the alt-ergo theorem prover.
 
 # Set print_flag to false or invoking with -select
 # from "why" will pause every invocation :-(.
-sed -i -e 's/let print_flag = true/let print_flag = false/;' pruning.ml
+sed -i -e 's/let print_flag = true/let print_flag = false/;' src/preprocess/pruning.ml
 
 %build
 ./configure \
@@ -52,15 +53,11 @@ sed -i -e 's/let print_flag = true/let print_flag = false/;' pruning.ml
 %{__make} -j1 OCAMLBEST=opt OCAMLOPT=ocamlopt.opt
 %{__make} -j1 OCAMLBEST=opt OCAMLOPT=ocamlopt.opt gui
 
-iconv -f ISO-8859-1 -t UTF-8 -o CeCILL-C.utf8 CeCILL-C
-touch -r CeCILL-C CeCILL-C.utf8
-%{__mv} -f CeCILL-C.utf8 CeCILL-C
-
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_desktopdir}}
 
-%{__make} install \
+%{__make} install install-gui \
 	OCAMLBEST=opt OCAMLOPT=ocamlopt.opt \
 	DESTDIR=$RPM_BUILD_ROOT
 
@@ -82,9 +79,8 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/%{name}
-%{_datadir}/%{name}/
 %{_mandir}/man1/alt-ergo.1.*
-%doc COPYING CeCILL-C CHANGES
+%doc COPYING CHANGES
 
 %files gui
 %defattr(644,root,root,755)
