@@ -1,7 +1,7 @@
 Summary:	Automated theorem prover including linear arithmetic
 Name:		alt-ergo
 Version:	0.95.2
-Release:	1
+Release:	2
 License:	CeCILL-C
 Group:		Applications/Engineering
 URL:		http://alt-ergo.lri.fr/
